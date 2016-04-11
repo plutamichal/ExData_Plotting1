@@ -14,12 +14,14 @@ temp_df <- read.csv.sql("household_power_consumption.txt",
 
 temp_df[ temp_df == "?" ] = NA
 
+time <- strptime(paste(temp_df$Date, temp_df$Time, sep=" "), "%d/%m/%Y %H:%M:%S") 
+
 ## Plot 4
 
 png(file = "plot4.png")
 par(mfrow=c(2,2))
 with(temp_df,  
-    plot(Global_active_power, type="l", col="black"
+    plot(time, Global_active_power, type="l", col="black"
         , ylab = "Global Active Power"
         , xlab = ''
         , xaxt = 'n')
@@ -30,7 +32,7 @@ len <- length(temp_df$Global_active_power)
 axis(side = 1, at = c(1, len/2, len), labels = c('Thu', 'Fri', 'Sat'))
 
 with(temp_df,  
-     plot(Voltage, type="l", col="black"
+     plot(time, Voltage, type="l", col="black"
           , ylab = "Voltage"
           , xlab = 'datetime'
           , xaxt = 'n')
@@ -42,18 +44,18 @@ axis(side = 1, at = c(1, len/2, len), labels = c('Thu', 'Fri', 'Sat'))
 
 
 with(temp_df,  
-     plot(Sub_metering_1, type="l", col="black"
+     plot(time, Sub_metering_1, type="l", col="black"
           , ylab = "Energy sub metering"
           , xlab = ''
           , xaxt = 'n')
 )
 
 with(temp_df,  
-     lines(Sub_metering_2, type="l"
+     lines(time, Sub_metering_2, type="l"
            , col = "red")
 )
 with(temp_df,  
-     lines(Sub_metering_3, type="l"
+     lines(time, Sub_metering_3, type="l"
            , col = "blue")
 )
 len <- length(temp_df$Global_active_power)

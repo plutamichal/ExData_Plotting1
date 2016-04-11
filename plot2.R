@@ -14,11 +14,13 @@ temp_df <- read.csv.sql("household_power_consumption.txt",
 
 temp_df[ temp_df == "?" ] = NA
 
+time <- strptime(paste(temp_df$Date, temp_df$Time, sep=" "), "%d/%m/%Y %H:%M:%S") 
+
 ## Plot 2
 
 png(file = "plot2.png")
 with(temp_df,  
-    plot(Global_active_power, type="l"
+    plot(time,Global_active_power, type="l"
         , ylab = "Global Active Power (kilowatts)"
         , xlab = ''
         , xaxt = 'n')
@@ -30,6 +32,4 @@ len <- length(temp_df$Global_active_power)
 axis(side = 1, at = c(1, len/2, len), labels = c('Thu', 'Fri', 'Sat'))
 
 dev.off()
-
-
 
